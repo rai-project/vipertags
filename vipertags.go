@@ -13,13 +13,19 @@ import (
 	"github.com/spf13/viper"
 )
 
-func buildConfiguration(st0 interface{}, prefix string) interface{} {
+func buildConfiguration(st0 interface{}, prefix0 string) interface{} {
 	st := structs.New(st0)
 	for _, field := range st.Fields() {
-		defaultTagValue := field.Tag("default")
-		envTagValue := field.Tag("env")
 		configTagValue := field.Tag("config")
 
+		if configTagValue == "-" {
+			continue
+		}
+
+		defaultTagValue := field.Tag("default")
+		envTagValue := field.Tag("env")
+
+		prefix := prefix0
 		if configTagValue != "" {
 			prefix = prefix + configTagValue
 		}
