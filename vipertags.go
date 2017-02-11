@@ -89,4 +89,9 @@ func Setup(fileType string, prefix string) {
 func FromFile(filename string, prefix string) {
 	Setup(strings.Replace(filepath.Ext(filename), ".", "", 1), prefix)
 	viper.SetConfigFile(filename)
+	err := viper.ReadInConfig()
+	if err != nil {
+		logrus.WithError(err).
+			Fatal("Cannot find configuration file.")
+	}
 }
