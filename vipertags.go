@@ -56,6 +56,7 @@ func buildConfiguration(st0 interface{}, prefix0 string) interface{} {
 			continue
 		}
 		if defaultTagValue != "" && configTagValue != "" {
+
 			viper.SetDefault(configTagValue, defaultTagValue)
 		}
 		if defaultTagValue != "" && configTagValue == "" {
@@ -78,6 +79,11 @@ func buildConfiguration(st0 interface{}, prefix0 string) interface{} {
 }
 
 func Fill(class interface{}) {
+	err := viper.ReadInConfig()
+	if err != nil {
+		logrus.WithError(err).
+			Fatal("Cannot find configuration file.")
+	}
 	buildConfiguration(class, "")
 }
 
