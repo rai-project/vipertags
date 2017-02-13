@@ -5,6 +5,8 @@ import (
 	"io/ioutil"
 	"os"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 var testYamlFile = "config.yaml"
@@ -55,4 +57,28 @@ func ExampleGetConfig() {
 	// 127.0.0.1
 	// 3126
 	// test
+}
+
+func TestDefaults(t *testing.T) {
+	type StringConfig struct {
+		FromEnv1 string `config:"name" default:"foo"`
+	}
+	c := StringConfig{}
+	Setup("yaml", "CONF") // Or Setup("json")
+	Fill(&c)
+	assert.Equal(t, "foo", c.FromEnv1, "")
+}
+
+func TestEnvironment(t *testing.T) {
+	os.Setenv("CONF_TEST1_FROMENV", "foo")
+	os.Setenv("CONF_FROMENV", "bar")
+	type StringConfig struct {
+		FromEnv1 string `config:"test1.fromenv"`
+		FromEnv2 string `config:"fromenv"`
+	}
+	c := StringConfig{}
+	Setup("yaml", "CONF") // Or Setup("json")
+	Fill(&c)
+	assert.Equal(t, c.FromEnv1, "foo", "")
+	assert.Equal(t, c.FromEnv2, "bar", "")
 }
