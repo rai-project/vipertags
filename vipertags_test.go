@@ -109,7 +109,7 @@ func TestSlice(t *testing.T) {
 	c := SliceConfig{}
 	Setup("yaml", "CONF") // Or Setup("json")
 	Fill(&c)
-	assert.Equal(t, c.Slice, []string{"elem0", "elem1"}, "")
+	assert.Equal(t, []string{"elem0", "elem1"}, c.Slice, "")
 }
 
 // func TestMemoryLimit(t *testing.T) {
