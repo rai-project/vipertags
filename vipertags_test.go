@@ -8,6 +8,7 @@ import (
 
 	"time"
 
+	"github.com/Sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -20,6 +21,7 @@ var testYaml = `test:
     port: 3126
     overridden: ""
     duration: "1h"
+    aslice: ["elem0", "elem1"]
 `
 
 func TestMain(m *testing.M) {
@@ -97,6 +99,17 @@ func ExampleDuration() {
 
 	// Output:
 	// 1h0m0s
+}
+
+func TestSlice(t *testing.T) {
+	logrus.SetLevel(logrus.DebugLevel)
+	type SliceConfig struct {
+		Slice []string `config:"test.aslice"`
+	}
+	c := SliceConfig{}
+	Setup("yaml", "CONF") // Or Setup("json")
+	Fill(&c)
+	assert.Equal(t, c.Slice, []string{"elem0", "elem1"}, "")
 }
 
 // func TestMemoryLimit(t *testing.T) {
