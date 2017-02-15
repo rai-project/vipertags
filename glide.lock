@@ -1,5 +1,5 @@
-hash: 5701f5060d087b2eb4d33f6d6340eb919f21a8b14e71342bc8a840a6a8cdb05c
-updated: 2017-02-11T09:55:01.316914457-06:00
+hash: 26ca27ec977554b350b646959501e57139ad6034c2d9917cd02134f9582c6c86
+updated: 2017-02-15T12:51:05.609317142-06:00
 imports:
 - name: github.com/fatih/structs
   version: a720dfa8df582c51dee1b36feabb906bde1588bd
@@ -55,4 +55,16 @@ imports:
   - unicode/norm
 - name: gopkg.in/yaml.v2
   version: a5b47d31c556af34a302ce5d659e6fea44d90de0
-testImports: []
+testImports:
+- name: github.com/davecgh/go-spew
+  version: 6d212800a42e8ab5c146b8ace3490ee17e5225f9
+  subpackages:
+  - spew
+- name: github.com/pmezard/go-difflib
+  version: d8ed2627bdf02c080bf22230dbb337003b7aba2d
+  subpackages:
+  - difflib
+- name: github.com/stretchr/testify
+  version: 69483b4bd14f5845b5a1e55bca19e954e827f1d0
+  subpackages:
+  - assert
