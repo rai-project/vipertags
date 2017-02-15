@@ -6,6 +6,8 @@ import (
 	"os"
 	"testing"
 
+	"time"
+
 	"github.com/stretchr/testify/assert"
 )
 
@@ -17,6 +19,7 @@ var testYaml = `test:
     hostname: "127.0.0.1"
     port: 3126
     overridden: ""
+    duration: "1h"
 `
 
 func TestMain(m *testing.M) {
@@ -82,3 +85,20 @@ func TestEnvironment(t *testing.T) {
 	assert.Equal(t, c.FromEnv1, "foo", "")
 	assert.Equal(t, c.FromEnv2, "bar", "")
 }
+
+func ExampleDuration() {
+	type DurConfig struct {
+		Duration time.Duration `config:"test.duration"`
+	}
+	c := DurConfig{}
+	Setup("yaml", "CONF")
+	Fill(&c)
+	fmt.Println(c.Duration)
+
+	// Output:
+	// 1h
+}
+
+// func TestMemoryLimit(t *testing.T) {
+
+// }
