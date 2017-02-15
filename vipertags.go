@@ -10,7 +10,6 @@ import (
 
 	"github.com/Sirupsen/logrus"
 	"github.com/fatih/structs"
-	"github.com/k0kubun/pp"
 	"github.com/spf13/cast"
 	"github.com/spf13/viper"
 )
@@ -72,34 +71,12 @@ func buildConfiguration(st0 interface{}, prefix0 string) interface{} {
 			buildConfiguration(field.Value(), prefix)
 			continue
 		}
-		if field.Kind() == reflect.Map {
-			pp.Println("map == ", field)
-			continue
-		}
-		if field.Kind() == reflect.Array || field.Kind() == reflect.Slice {
-
-			t := reflect.Indirect(reflect.ValueOf(field.Value()))
-
-			slice := reflect.MakeSlice(t.Type(), t.Len(), t.Len())
-			slices := reflect.New(slice.Type())
-			slices.Elem().Set(slice)
-
-			for ii := 0; ii < t.Len(); ii++ {
-				e := t.Index(ii).Interface()
-				elem := buildConfiguration(e, prefix)
-				slices.Elem().Index(ii).Set(reflect.ValueOf(elem))
-			}
-			pp.Println(slices.Interface())
-			field.Set(slices.Interface())
-			continue
-		}
 		if defaultTagValue != "" && configTagValue != "" {
 			viper.SetDefault(configTagValue, defaultTagValue)
 		}
 		if defaultTagValue != "" && configTagValue == "" {
 			setField(field, defaultTagValue)
 		}
-
 		if envTagValue != "" && configTagValue != "" {
 			viper.BindEnv(configTagValue, envTagValue)
 		}
