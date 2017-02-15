@@ -21,7 +21,9 @@ func setField(field *structs.Field, val interface{}) {
 		field.Set(cast.ToBool(val))
 	case string:
 		field.Set(cast.ToString(val))
-	case int64, int32, int16, int8, int:
+	case int64:
+		field.Set(cast.ToInt64(val))
+	case int32, int16, int8, int:
 		field.Set(cast.ToInt(val))
 	case float64, float32:
 		field.Set(cast.ToFloat64(val))
@@ -29,8 +31,20 @@ func setField(field *structs.Field, val interface{}) {
 		field.Set(cast.ToTime(val))
 	case time.Duration:
 		field.Set(cast.ToDuration(val))
+	case map[string]string:
+		field.Set(cast.ToStringMapString(val))
+	case map[string][]string:
+		field.Set(cast.ToStringMapStringSlice(val))
+	case map[string]bool:
+		field.Set(cast.ToStringMapBool(val))
+	case map[string]interface{}:
+		field.Set(cast.ToStringMap(val))
+	case []int:
+		field.Set(cast.ToIntSlice(val))
 	case []string:
 		field.Set(cast.ToStringSlice(val))
+	case []interface{}:
+		field.Set(cast.ToSlice(val))
 	default:
 		field.Set(val)
 	}
