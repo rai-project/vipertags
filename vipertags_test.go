@@ -96,7 +96,7 @@ func ExampleDuration() {
 	fmt.Println(c.Duration)
 
 	// Output:
-	// 1h
+	// 1h0m0s
 }
 
 // func TestMemoryLimit(t *testing.T) {
