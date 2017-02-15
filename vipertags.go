@@ -4,14 +4,37 @@ import (
 	"path/filepath"
 	"reflect"
 	"strings"
+	"time"
 
 	"os"
 
 	"github.com/Sirupsen/logrus"
 	"github.com/fatih/structs"
 	"github.com/k0kubun/pp"
+	"github.com/spf13/cast"
 	"github.com/spf13/viper"
 )
+
+func setField(field *structs.Field, val interface{}) {
+	switch field.Value().(type) {
+	case bool:
+		field.Set(cast.ToBool(val))
+	case string:
+		field.Set(cast.ToString(val))
+	case int64, int32, int16, int8, int:
+		field.Set(cast.ToInt(val))
+	case float64, float32:
+		field.Set(cast.ToFloat64(val))
+	case time.Time:
+		field.Set(cast.ToTime(val))
+	case time.Duration:
+		field.Set(cast.ToDuration(val))
+	case []string:
+		field.Set(cast.ToStringSlice(val))
+	default:
+		field.Set(val)
+	}
+}
 
 func buildConfiguration(st0 interface{}, prefix0 string) interface{} {
 	st := structs.New(st0)
@@ -56,11 +79,10 @@ func buildConfiguration(st0 interface{}, prefix0 string) interface{} {
 			continue
 		}
 		if defaultTagValue != "" && configTagValue != "" {
-
 			viper.SetDefault(configTagValue, defaultTagValue)
 		}
 		if defaultTagValue != "" && configTagValue == "" {
-			field.Set(defaultTagValue)
+			setField(field, defaultTagValue)
 		}
 
 		if envTagValue != "" && configTagValue != "" {
@@ -68,11 +90,11 @@ func buildConfiguration(st0 interface{}, prefix0 string) interface{} {
 		}
 		if envTagValue != "" && configTagValue == "" {
 			if e := os.Getenv(envTagValue); e != "" {
-				field.Set(e)
+				setField(field, e)
 			}
 		}
 		if configTagValue != "" {
-			field.Set(viper.Get(configTagValue))
+			setField(field, viper.Get(configTagValue))
 		}
 	}
 	return st0
