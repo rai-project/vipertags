@@ -53,6 +53,7 @@ func setField(field *structs.Field, val interface{}) {
 func buildConfiguration(st0 interface{}, prefix0 string) interface{} {
 	st := structs.New(st0)
 	for _, field := range st.Fields() {
+
 		configTagValue := field.Tag("config")
 
 		if configTagValue == "-" {
@@ -76,7 +77,7 @@ func buildConfiguration(st0 interface{}, prefix0 string) interface{} {
 			continue
 		}
 		if field.Kind() == reflect.Array || field.Kind() == reflect.Slice {
-			logrus.Fatal("Vipertags parsing of array and slice not currently working...")
+
 			t := reflect.Indirect(reflect.ValueOf(field.Value()))
 
 			slice := reflect.MakeSlice(t.Type(), t.Len(), t.Len())
