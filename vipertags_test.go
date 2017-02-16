@@ -32,6 +32,7 @@ func TestMain(m *testing.M) {
 		panic("cannot create temp yaml config file needed for testing")
 	}
 	defer os.Remove(testYamlFile)
+	FromFile(testYamlFile, "")
 	m.Run()
 }
 
