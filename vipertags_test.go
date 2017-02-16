@@ -112,6 +112,17 @@ func TestSlice(t *testing.T) {
 	assert.Equal(t, []string{"elem0", "elem1"}, c.Slice, "")
 }
 
+func TestDefaultSlice(t *testing.T) {
+	logrus.SetLevel(logrus.DebugLevel)
+	type SliceConfig struct {
+		Slice []string `default:"default value"`
+	}
+	c := SliceConfig{}
+	//Setup("yaml", "CONF") // Or Setup("json")
+	Fill(&c)
+	assert.Equal(t, []string{"default", "value"}, c.Slice, "")
+}
+
 // func TestMemoryLimit(t *testing.T) {
 
 // }
