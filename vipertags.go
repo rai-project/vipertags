@@ -71,6 +71,7 @@ func buildConfiguration(st0 interface{}, prefix0 string) interface{} {
 			buildConfiguration(field.Value(), prefix)
 			continue
 		}
+
 		if defaultTagValue != "" && configTagValue != "" {
 			viper.SetDefault(configTagValue, defaultTagValue)
 		}
@@ -86,6 +87,7 @@ func buildConfiguration(st0 interface{}, prefix0 string) interface{} {
 			}
 		}
 		if configTagValue != "" {
+			// pp.Println(configTagValue, "  ", viper.Get(configTagValue))
 			setField(field, viper.Get(configTagValue))
 		}
 	}
