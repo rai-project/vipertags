@@ -71,7 +71,7 @@ func TestDefaults(t *testing.T) {
 	}
 	c := StringConfig{}
 	Setup("yaml", "CONF") // Or Setup("json")
-	Fill(&c)
+	SetDefault(&c)
 	assert.Equal(t, "foo", c.FromEnv1, "")
 }
 
@@ -109,6 +109,7 @@ func TestSlice(t *testing.T) {
 	}
 	c := SliceConfig{}
 	Setup("yaml", "CONF") // Or Setup("json")
+	SetDefaults(&c)
 	Fill(&c)
 	assert.Equal(t, []string{"elem0", "elem1"}, c.Slice, "")
 }
@@ -120,7 +121,7 @@ func TestDefaultSlice(t *testing.T) {
 	}
 	c := SliceConfig{}
 	//Setup("yaml", "CONF") // Or Setup("json")
-	Fill(&c)
+	SetDefaults(&c)
 	assert.Equal(t, []string{"default", "value"}, c.Slice, "")
 }
 

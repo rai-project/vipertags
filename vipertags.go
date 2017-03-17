@@ -49,7 +49,7 @@ func setField(field *structs.Field, val interface{}) {
 	}
 }
 
-func buildConfiguration(st0 interface{}, prefix0 string) interface{} {
+func buildDefault(st0 interface{}, prefix0 string) interface{} {
 	st := structs.New(st0)
 	for _, field := range st.Fields() {
 
@@ -60,6 +60,34 @@ func buildConfiguration(st0 interface{}, prefix0 string) interface{} {
 		}
 
 		defaultTagValue := field.Tag("default")
+
+		prefix := prefix0
+		if configTagValue != "" {
+			prefix = prefix + configTagValue
+		}
+
+		if field.Kind() == reflect.Struct {
+			buildDefault(field.Value(), prefix)
+			continue
+		}
+
+		if defaultTagValue != "" {
+			setField(field, defaultTagValue)
+		}
+	}
+	return st0
+}
+
+func buildConfiguration(st0 interface{}, prefix0 string) interface{} {
+	st := structs.New(st0)
+	for _, field := range st.Fields() {
+
+		configTagValue := field.Tag("config")
+
+		if configTagValue == "-" {
+			continue
+		}
+
 		envTagValue := field.Tag("env")
 
 		prefix := prefix0
@@ -72,12 +100,6 @@ func buildConfiguration(st0 interface{}, prefix0 string) interface{} {
 			continue
 		}
 
-		if defaultTagValue != "" && configTagValue != "" {
-			viper.SetDefault(configTagValue, defaultTagValue)
-		}
-		if defaultTagValue != "" && configTagValue == "" {
-			setField(field, defaultTagValue)
-		}
 		if envTagValue != "" && configTagValue != "" {
 			viper.BindEnv(configTagValue, envTagValue)
 		}
@@ -87,11 +109,14 @@ func buildConfiguration(st0 interface{}, prefix0 string) interface{} {
 			}
 		}
 		if configTagValue != "" {
-			// pp.Println(configTagValue, "  ", viper.Get(configTagValue))
 			setField(field, viper.Get(configTagValue))
 		}
 	}
 	return st0
+}
+
+func SetDefaults(class interface{}) {
+	buildDefault(class, "")
 }
 
 func Fill(class interface{}) {
