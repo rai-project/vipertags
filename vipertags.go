@@ -108,7 +108,7 @@ func buildConfiguration(st0 interface{}, prefix0 string) interface{} {
 				setField(field, e)
 			}
 		}
-		if configTagValue != "" {
+		if configTagValue != "" && viper.IsSet(configTagValue) {
 			setField(field, viper.Get(configTagValue))
 		}
 	}
