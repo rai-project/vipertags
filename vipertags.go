@@ -8,7 +8,7 @@ import (
 
 	"os"
 
-	"github.com/Sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 	"github.com/fatih/structs"
 	"github.com/spf13/cast"
 	"github.com/spf13/viper"
