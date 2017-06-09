@@ -30,7 +30,7 @@ install:
 
 
 test_script:
-- glide install --force
+- glide install --force --strip-vendor
 - go build
 - go test -race -v .
 
