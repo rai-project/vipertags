@@ -1,9 +1,9 @@
 package: github.com/rai-project/vipertags
 import:
 - package: github.com/sirupsen/logrus
-  version: master
+  version: ^1.0.0
 - package: github.com/Sirupsen/logrus
-  version: master
+  version: ^1.0.0
   repo:    git@github.com:sirupsen/logrus
   vcs:     git
 - package: github.com/fatih/structs
