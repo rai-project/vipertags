@@ -4,7 +4,7 @@ import:
   version: ^1.0.0
 - package: github.com/Sirupsen/logrus
   version: ^1.0.0
-  repo:    github.com/sirupsen/logrus
+  repo:    https://github.com/sirupsen/logrus.git
 - package: github.com/fatih/structs
 - package: github.com/k0kubun/pp
   version: ~2.3.0
