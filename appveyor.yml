@@ -30,7 +30,7 @@ install:
 
 
 test_script:
-- glide --debug install --force
+- glide install --force
 - rm -fr vendor/github.com/Sirupsen
   - find vendor -type f -exec sed -i 's/Sirupsen/sirupsen/g' {} +
 - go build
