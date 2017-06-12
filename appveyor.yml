@@ -30,7 +30,7 @@ install:
 
 
 test_script:
-- glide install --force --debug
+- glide --debug install --force 
 - go build
 - go test -race -v .
 
