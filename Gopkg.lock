@@ -94,10 +94,10 @@
   version = "v1.0.1"
 
 [[projects]]
+  branch = "master"
   name = "github.com/spf13/viper"
   packages = ["."]
-  revision = "b5e8006cbee93ec955a89ab31e0e3ce3204f3736"
-  version = "v1.0.2"
+  revision = "15738813a09db5c8e5b60a19d67d3f9bd38da3a4"
 
 [[projects]]
   name = "github.com/stretchr/testify"
@@ -142,6 +142,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "096472de4db858d16271ddc518f9453722a3e74dc96afb9db00a5656aa592710"
+  inputs-digest = "4e8a0729a9339af3573fabefff8a685cd476918130d3a5b0231718ed29536642"
   solver-name = "gps-cdcl"
   solver-version = 1
