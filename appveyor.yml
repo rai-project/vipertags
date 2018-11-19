@@ -1,4 +1,3 @@
-
 version: build-{build}.{branch}
 
 clone_folder: C:\gopath\src\github.com\rai-project\archive
@@ -13,28 +12,25 @@ environment:
       GOVERSION: 1.8
 
 platform:
-- x64
+  - x64
 
 init:
-- git config --global core.autocrlf input
+  - git config --global core.autocrlf input
 
 install:
-# Install the specific Go version.
-- rmdir c:\go /s /q
-- appveyor DownloadFile https://storage.googleapis.com/golang/go%GOVERSION%.windows-amd64.msi
-- msiexec /i go%GOVERSION%.windows-amd64.msi /q
-- set Path=c:\go\bin;c:\gopath\bin;%Path%
-- go version
-- go env
-- go get github.com/Masterminds/glide
-
+  # Install the specific Go version.
+  - rmdir c:\go /s /q
+  - appveyor DownloadFile https://storage.googleapis.com/golang/go%GOVERSION%.windows-amd64.msi
+  - msiexec /i go%GOVERSION%.windows-amd64.msi /q
+  - set Path=c:\go\bin;c:\gopath\bin;%Path%
+  - go version
+  - go env
+  - go get github.com/golang/dep
 
 test_script:
-- glide install --force
-- rm -fr vendor/github.com/Sirupsen
-  - find vendor -type f -exec sed -i 's/Sirupsen/sirupsen/g' {} +
-- go build
-- go test -race -v .
+  - dep ensure -v
+  - go build
+  - go test -race -v .
 
 build: false
 deploy: false
